@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\OrderStatus;
 use App\Models\Order;
 use Illuminate\Database\Seeder;
 
