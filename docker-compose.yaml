@@ -1,0 +1,56 @@
+
+services:
+
+  nginx:
+    image: nginx:1.27
+    container_name: tech-nginx
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www
+
+  api:
+    container_name: tech-api
+    build:
+      args:
+        user: tech-user
+        uid: 1000
+      context: .
+      dockerfile: ./docker/Dockerfile
+      network: host
+    volumes:
+      - .:/var/www
+
+  db:
+    image: mysql:8.0
+    container_name: tech-db
+    volumes:
+      - ./.mysql:/var/lib/mysql:rw
+      - ./init/db:/docker-entrypoint-initdb.d
+    ports:
+      - "3036:3306"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+
+  phpmyadmin:
+    profiles:
+      - local
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: tech-phpmyadmin
+    depends_on:
+      - db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PMA_HOST: tech-db
+      MYSQL_ROOT_PASSWORD:  ${DB_ROOT_PASSWORD}
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
