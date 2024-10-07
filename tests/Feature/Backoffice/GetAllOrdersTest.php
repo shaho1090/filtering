@@ -24,12 +24,12 @@ class GetAllOrdersTest extends TestCase
         $response->assertJson(
             fn(AssertableJson $json) => $json
                 ->has('data', 2)
-                ->where('data.0.id', $orders[0]->id)
-                ->where('data.0.status', $orders[0]->status)
-                ->where('data.0.amount', $orders[0]->amount)
-                ->where('data.1.id', $orders[1]->id)
-                ->where('data.1.status', $orders[1]->status)
-                ->where('data.1.amount', $orders[1]->amount)
+                ->where('data.0.id', $orders[1]->id)
+                ->where('data.0.status', $orders[1]->status)
+                ->where('data.0.amount', $orders[1]->amount)
+                ->where('data.1.id', $orders[0]->id)
+                ->where('data.1.status', $orders[0]->status)
+                ->where('data.1.amount', $orders[0]->amount)
                 ->has('links')
         );
     }
