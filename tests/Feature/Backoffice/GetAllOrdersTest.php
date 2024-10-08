@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Backoffice;
+namespace Tests\Feature\Backoffice;
 
 use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
