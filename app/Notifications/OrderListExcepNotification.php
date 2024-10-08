@@ -39,7 +39,7 @@ class OrderListExcepNotification extends Notification
             ->from(config('services.sms.from'))
             ->line('Something went wrong in the order list endpoint.')
             ->line('Please check the corresponding log file to more information.')
-            ->to($notifiable->mobile);
+            ->to('0'.$notifiable->mobile);
     }
 
     public function toMail(object $notifiable): MailMessage
