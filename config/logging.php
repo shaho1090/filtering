@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'order_list_exceptions' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/order-list-ex/' .date('Y-m-d') . '.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
     ],
 
 ];
