@@ -11,17 +11,19 @@ Make sure the ports you are going to define for NGINX_PORT and PHPMYADMN_PORT, h
 ```cmd
 $ docker compose build
 ```
-The above command may take several minutes to complete. And, of course prepare a proper DNS on your network if you need!
-
+The above command may take several minutes to complete. And, of course prepare a proper DNS on your network if you need!   
+We have a profile named **local** and its purpose is for separating the testing environment from possible stage or production settings, so when you are setting up your local env you can run this command:
 ```cmd
-$ docker compose up -d
-``` 
-After completing previous steps ,Go to tech-api container by running this command:
+$ docker compose --profile local up -d
+```
+After completing previous steps ,go to tech-api container by running this command:
 ```cmd
 $ docker exec -it tech-api bash
 ```
 And, run:
 ```cmd
+$ composer install
+$ php artisan key:generate
 $ php artisan migrate
 $ php artisan db:seed UserSeeder
 ```
@@ -38,4 +40,17 @@ ADMIN_EMAIL=admin@admin.ir
 SMS_FROM=334000000
 ```
 These values are just examples, you can change them as you wish.
-To check and test the received emails you can use [mailtrap](https://mailtrap.io/) website.
+To check and test the received emails you can use [mailtrap](https://mailtrap.io/) website.    
+
+The orders list api is:
+```
+localhost:<NGINX_PORT>/api/backoffice/orders
+```
+You can use these examples filters:
+```
+status=completed
+amount[min]=1000
+amount[max]=9000
+search_customer=9120000000
+search_customer=3732222222
+```
